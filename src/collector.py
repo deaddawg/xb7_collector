@@ -3,7 +3,6 @@
 
 import bs4
 import click
-import datetime
 import itertools
 import logging
 import requests
@@ -338,7 +337,6 @@ class XB7Collector:
         '''Expecting XB7 class
         '''
         self.modem = modem
-        self.collection_time = None
 
     def _build_ds_metrics(self, downstream):
         ds_metrics_lock = GaugeMetricFamily(
@@ -457,7 +455,6 @@ class XB7Collector:
         LOG.info('New collection request.')
 
         (downstream, upstream, cm_errors) = self.modem.get_html_stats()
-        self.collection_time = int(float(datetime.datetime.now().timestamp()) * 1000)
 
         return itertools.chain(
             self._build_ds_metrics(downstream),
